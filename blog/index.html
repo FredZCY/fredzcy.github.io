@@ -315,8 +315,8 @@
           <div class="hero-kicker">Medium Journal</div>
           <h1>Thoughts, experiments, and notes in progress.</h1>
           <p>
-            My writing now lives on Medium. The latest posts below update
-            automatically from my profile.
+            My writing now lives on Medium. Here is a curated snapshot of the
+            latest posts.
           </p>
           <div class="hero-actions">
             <a
@@ -334,13 +334,127 @@
 
     <div class="container blog-content">
       <div class="post">
-        <div id="medium-status">Loading latest posts...</div>
-        <div id="medium-posts" class="row row-cols-1 row-cols-md-2"></div>
-        <div id="medium-error" class="text-muted" style="display: none;">
-          Could not load Medium posts right now. Please visit
-          <a href="https://fred-zhang.medium.com" target="_blank" rel="noopener"
-            >fred-zhang.medium.com</a
-          >.
+        <div id="medium-status">Showing 5 latest posts from Medium.</div>
+        <div id="medium-posts" class="row row-cols-1 row-cols-md-2">
+          <div class="card-item col mb-4">
+            <div class="card hoverable">
+              <div class="row g-0">
+                <div class="col-md-12">
+                  <div class="card-body">
+                    <h3 class="card-title">
+                      Graph RAG: When Retrieval Stops Being a Search Problem and
+                      Becomes a Reasoning Problem
+                    </h3>
+                    <p class="post-meta">
+                      <i class="fas fa-calendar fa-sm"></i> Jan 30, 2026
+                    </p>
+                    <a
+                      href="https://medium.com/@zhangchenyu555/graph-rag-when-retrieval-stops-being-a-search-problem-and-becomes-a-reasoning-problem-b4ae916c52ac"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn-outline-primary btn-sm"
+                      >Read on Medium</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-item col mb-4">
+            <div class="card hoverable">
+              <div class="row g-0">
+                <div class="col-md-12">
+                  <div class="card-body">
+                    <h3 class="card-title">
+                      Cognitive Debt: The Hidden Cost of Letting AI Do Our
+                      Writing
+                    </h3>
+                    <p class="post-meta">
+                      <i class="fas fa-calendar fa-sm"></i> Jan 18, 2026
+                    </p>
+                    <a
+                      href="https://fred-zhang.medium.com/cognitive-debt-the-hidden-cost-of-letting-ai-do-our-writing-dfadb1ac1e53"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn-outline-primary btn-sm"
+                      >Read on Medium</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-item col mb-4">
+            <div class="card hoverable">
+              <div class="row g-0">
+                <div class="col-md-12">
+                  <div class="card-body">
+                    <h3 class="card-title">
+                      Agentic AI: From Chatbots to Autonomous Agents
+                    </h3>
+                    <p class="post-meta">
+                      <i class="fas fa-calendar fa-sm"></i> Jan 15, 2026
+                    </p>
+                    <a
+                      href="https://fred-zhang.medium.com/agentic-ai-from-chatbots-to-autonomous-agents-5de0b8f072d0"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn-outline-primary btn-sm"
+                      >Read on Medium</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-item col mb-4">
+            <div class="card hoverable">
+              <div class="row g-0">
+                <div class="col-md-12">
+                  <div class="card-body">
+                    <h3 class="card-title">
+                      From Pretraining to Post-Training: How LLMs Learn to
+                      Follow Instructions
+                    </h3>
+                    <p class="post-meta">
+                      <i class="fas fa-calendar fa-sm"></i> Jan 10, 2026
+                    </p>
+                    <a
+                      href="https://fred-zhang.medium.com/from-pretraining-to-post-training-how-llms-learn-to-follow-instructions-044bbee90e73"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn-outline-primary btn-sm"
+                      >Read on Medium</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-item col mb-4">
+            <div class="card hoverable">
+              <div class="row g-0">
+                <div class="col-md-12">
+                  <div class="card-body">
+                    <h3 class="card-title">
+                      From N-gram to RNN to Transformer: How Language Models
+                      Evolved into Modern LLMs
+                    </h3>
+                    <p class="post-meta">
+                      <i class="fas fa-calendar fa-sm"></i> Jan 3, 2026
+                    </p>
+                    <a
+                      href="https://fred-zhang.medium.com/from-n-gram-to-rnn-to-transformer-how-language-models-evolved-into-modern-llms-a4690f030027"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn-outline-primary btn-sm"
+                      >Read on Medium</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -364,186 +478,6 @@
     <script src="/assets/js/no_defer.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/copy_code.js"></script>
-
-    <script>
-      (function () {
-        var profileUrl = "https://fred-zhang.medium.com";
-        var feedUrls = [
-          "https://fred-zhang.medium.com/feed",
-          "https://medium.com/feed/@zhangchenyu555",
-        ];
-        var itemsLimit = 6;
-
-        var container = document.getElementById("medium-posts");
-        var errorMessage = document.getElementById("medium-error");
-        var statusMessage = document.getElementById("medium-status");
-        if (!container) {
-          return;
-        }
-
-        function escapeHtml(value) {
-          return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
-        }
-
-        function stripHtml(value) {
-          var temp = document.createElement("div");
-          temp.innerHTML = value || "";
-          return (temp.textContent || temp.innerText || "").trim();
-        }
-
-        function formatDate(value) {
-          var date = new Date(value);
-          if (Number.isNaN(date.getTime())) {
-            return "";
-          }
-          return date.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          });
-        }
-
-        function renderItems(items) {
-          if (!items.length) {
-            throw new Error("No Medium items");
-          }
-
-          if (statusMessage) {
-            statusMessage.textContent =
-              "Showing " + items.length + " latest posts from Medium.";
-          }
-
-          container.innerHTML = items
-            .map(function (item) {
-              var title = escapeHtml(item.title || "Untitled");
-              var link = escapeHtml(item.link || profileUrl);
-              var excerpt = stripHtml(item.description || item.content || "");
-              excerpt = escapeHtml(excerpt.replace(/\s+/g, " ").slice(0, 140));
-              var dateLabel = formatDate(item.pubDate);
-
-              return (
-                '<div class="card-item col mb-4">' +
-                '<a href="' +
-                link +
-                '" target="_blank" rel="noopener">' +
-                '<div class="card hoverable">' +
-                '<div class="row g-0">' +
-                '<div class="col-md-12">' +
-                '<div class="card-body">' +
-                '<h3 class="card-title">' +
-                title +
-                "</h3>" +
-                (excerpt
-                  ? '<p class="card-text">' + excerpt + "...</p>"
-                  : "") +
-                (dateLabel
-                  ? '<p class="post-meta"><i class="fas fa-calendar fa-sm"></i> ' +
-                    dateLabel +
-                    "</p>"
-                  : "") +
-                "</div></div></div></div></a></div>"
-              );
-            })
-            .join("");
-        }
-
-        function fetchViaRss2Json(feedUrl) {
-          var apiUrl =
-            "https://api.rss2json.com/v1/api.json?rss_url=" +
-            encodeURIComponent(feedUrl) +
-            "&count=" +
-            itemsLimit;
-
-          return fetch(apiUrl)
-            .then(function (response) {
-              return response.json();
-            })
-            .then(function (data) {
-              if (
-                !data ||
-                data.status !== "ok" ||
-                !Array.isArray(data.items)
-              ) {
-                throw new Error("Invalid rss2json response");
-              }
-              return data.items.slice(0, itemsLimit);
-            });
-        }
-
-        function parseRss(xmlText) {
-          var parser = new DOMParser();
-          var doc = parser.parseFromString(xmlText, "text/xml");
-          if (doc.querySelector("parsererror")) {
-            throw new Error("Invalid RSS XML");
-          }
-
-          var nodes = Array.prototype.slice.call(
-            doc.querySelectorAll("item")
-          );
-
-          return nodes.slice(0, itemsLimit).map(function (node) {
-            var titleNode = node.querySelector("title");
-            var linkNode = node.querySelector("link");
-            var dateNode = node.querySelector("pubDate");
-            var descriptionNode = node.querySelector("description");
-            var encodedNode = node.querySelector("content\\:encoded");
-
-            return {
-              title: titleNode ? titleNode.textContent : "",
-              link: linkNode ? linkNode.textContent : "",
-              pubDate: dateNode ? dateNode.textContent : "",
-              description: encodedNode
-                ? encodedNode.textContent
-                : descriptionNode
-                ? descriptionNode.textContent
-                : "",
-            };
-          });
-        }
-
-        function fetchViaAllOrigins(feedUrl) {
-          var proxyUrl =
-            "https://api.allorigins.win/raw?url=" +
-            encodeURIComponent(feedUrl);
-          return fetch(proxyUrl)
-            .then(function (response) {
-              return response.text();
-            })
-            .then(parseRss);
-        }
-
-        function tryFeeds(index) {
-          if (index >= feedUrls.length) {
-            return Promise.reject(new Error("All feeds failed"));
-          }
-
-          var feedUrl = feedUrls[index];
-          return fetchViaRss2Json(feedUrl)
-            .catch(function () {
-              return fetchViaAllOrigins(feedUrl);
-            })
-            .catch(function () {
-              return tryFeeds(index + 1);
-            });
-        }
-
-        tryFeeds(0)
-          .then(renderItems)
-          .catch(function () {
-            if (errorMessage) {
-              errorMessage.style.display = "block";
-            }
-            if (statusMessage) {
-              statusMessage.textContent = "Latest posts from Medium.";
-            }
-          });
-      })();
-    </script>
 
     <script>
       window.MathJax = { tex: { tags: "ams" } };
