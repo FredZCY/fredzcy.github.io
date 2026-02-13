@@ -16,17 +16,202 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha256-i1+4qU2G2860dGGIOJscdC30s9beBXjFfzjWLjBRsBg=" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Source+Sans+3:wght@300;400;500;600&display=swap"
+    />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/github.css" media="" id="highlight_theme_light">
     <link rel="shortcut icon" href="/assets/img/yu_icon.jpg">
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="canonical" href="https://chenyuzhang.github.io/cv/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jwarby/jekyll-pygments-themes@master/native.css" media="none" id="highlight_theme_dark">
+    <style>
+      :root {
+        --cv-ink: #14171f;
+        --cv-muted: #5e6673;
+        --cv-accent: #1f4d7a;
+        --cv-accent-soft: #dbe7f2;
+        --cv-card: #ffffff;
+        --cv-surface: #f5f7fb;
+        --cv-border: rgba(31, 77, 122, 0.12);
+        --cv-shadow: 0 18px 40px rgba(20, 23, 31, 0.1);
+      }
+
+      html[data-theme="dark"] {
+        --cv-ink: #e8e8e8;
+        --cv-muted: #b6bcc2;
+        --cv-accent: #7bb6ff;
+        --cv-accent-soft: #16283c;
+        --cv-card: #22262b;
+        --cv-surface: #1c1c1d;
+        --cv-border: rgba(123, 182, 255, 0.2);
+        --cv-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      }
+
+      body.cv-page {
+        background: linear-gradient(180deg, #eef1f6 0%, #ffffff 45%);
+      }
+      html[data-theme="dark"] body.cv-page {
+        background: linear-gradient(180deg, #15181b 0%, #1c1c1d 45%);
+      }
+
+      .cv-hero {
+        margin-top: 3.5rem;
+        padding: 2.25rem 0 1.75rem;
+        background: radial-gradient(
+            circle at 18% 20%,
+            rgba(31, 77, 122, 0.1),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 82% 10%,
+            rgba(31, 77, 122, 0.12),
+            transparent 45%
+          );
+      }
+
+      .cv-hero .hero-card {
+        background: var(--cv-card);
+        border-radius: 24px;
+        padding: 1.75rem 2.25rem;
+        box-shadow: var(--cv-shadow);
+        border: 1px solid var(--cv-border);
+      }
+
+      .cv-hero .hero-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.7rem;
+        color: var(--cv-muted);
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+      }
+
+      .cv-hero h1 {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        font-size: clamp(1.9rem, 2.4vw, 2.7rem);
+        color: var(--cv-ink);
+        margin-bottom: 0.5rem;
+      }
+
+      .cv-hero p {
+        font-family: "Source Sans 3", sans-serif;
+        color: var(--cv-muted);
+        font-size: 1rem;
+        margin-bottom: 1.1rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .hero-actions .btn {
+        border-radius: 999px;
+        padding: 0.45rem 1.35rem;
+        font-weight: 600;
+        font-family: "Source Sans 3", sans-serif;
+      }
+
+      .hero-actions .btn-primary {
+        background: var(--cv-accent);
+        border-color: var(--cv-accent);
+      }
+
+      .hero-actions .btn-outline-dark {
+        border-color: rgba(20, 23, 31, 0.2);
+      }
+      html[data-theme="dark"] .hero-actions .btn-outline-dark {
+        border-color: rgba(232, 232, 232, 0.3);
+        color: var(--cv-ink);
+      }
+
+      .cv-content {
+        padding: 0 0 4rem;
+      }
+
+      .cv-toc-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.25rem;
+        color: var(--cv-ink);
+        margin-bottom: 0.75rem;
+      }
+
+      .cv-toc {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      .cv-toc a {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        background: var(--cv-accent-soft);
+        color: var(--cv-accent);
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .cv-toc a:hover {
+        background: var(--cv-accent);
+        color: #ffffff;
+        text-decoration: none;
+      }
+
+      .cv-page .cv {
+        font-family: "Source Sans 3", sans-serif;
+      }
+
+      .cv-page .cv .card {
+        background: var(--cv-card);
+        border: 1px solid var(--cv-border);
+        box-shadow: var(--cv-shadow);
+        border-radius: 18px;
+      }
+
+      .cv-page .cv .card .list-group-item {
+        background: transparent;
+        border-color: var(--cv-border);
+      }
+
+      .cv-page .cv .card-title {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        color: var(--cv-ink);
+      }
+
+      .cv-page .cv .badge {
+        background-color: var(--cv-accent);
+        color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        .cv-hero {
+          margin-top: 2.75rem;
+          padding: 1.75rem 0 1.25rem;
+        }
+
+        .cv-hero .hero-card {
+          padding: 1.5rem 1.5rem;
+        }
+      }
+    </style>
+
     <script src="/assets/js/theme.js">
     </script>
     <script src="/assets/js/dark_mode.js">
     </script>
   </head>
-  <body class="fixed-top-nav ">
+  <body class="fixed-top-nav cv-page">
     <header>
       <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top">
         <div class="container">
@@ -91,70 +276,40 @@
         </div>
       </progress>
     </header>
-    <div class="container mt-5">
+    <section class="cv-hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-kicker">Curriculum Vitae</div>
+          <h1>Chenyu (Fred) Zhang</h1>
+          <p>Data Scientist · New York, NY</p>
+          <div class="hero-actions">
+            <a
+              class="btn btn-primary"
+              href="/assets/pdf/Chenyu_Zhang_Resume_AI.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download Resume
+            </a>
+            <a class="btn btn-outline-dark" href="mailto:zhangchenyu555@gmail.com">
+              Email Me
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container cv-content">
       <div class="post">
-        <header class="post-header">
-          <h1 class="post-title">
-            cv
-            <a href="/assets/pdf/Chenyu_Zhang_Resume_AI.pdf" target="_blank" rel="noopener noreferrer" class="float-right">
-              <i class="fas fa-file-pdf">
-              </i>
-            </a>
-          </h1>
-        </header>
-        <h4>
-          Table of contents
-        </h4>
-        <ul class="timeline">
-          <li>
-            <a href="#basics">
-              <span class="badge-toc">
-                Basics
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#education">
-              <span class="badge-toc">
-                Education
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#work">
-              <span class="badge-toc">
-                Work
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#awards">
-              <span class="badge-toc">
-                Awards
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#skills">
-              <span class="badge-toc">
-                Skills
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#certifications">
-              <span class="badge-toc">
-                Certifications
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#languages">
-              <span class="badge-toc">
-                Languages
-              </span>
-            </a>
-          </li>
+        <div class="cv-toc-title">Table of contents</div>
+        <ul class="cv-toc">
+          <li><a href="#basics">Basics</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#awards">Awards</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+          <li><a href="#languages">Languages</a></li>
         </ul>
         <article>
           <div class="cv">
