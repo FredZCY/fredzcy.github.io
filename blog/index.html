@@ -76,10 +76,28 @@
         --blog-accent-soft: #d7e9dd;
         --blog-card: #ffffff;
         --blog-surface: #f7f3ee;
+        --blog-border: rgba(31, 77, 46, 0.08);
+        --blog-shadow: 0 20px 60px rgba(28, 29, 32, 0.12);
+        --blog-shadow-hover: 0 26px 60px rgba(28, 29, 32, 0.16);
+      }
+
+      html[data-theme="dark"] {
+        --blog-ink: #e8e8e8;
+        --blog-muted: #b6bcc2;
+        --blog-accent: #73c28c;
+        --blog-accent-soft: #1f3b2b;
+        --blog-card: #22262b;
+        --blog-surface: #1c1c1d;
+        --blog-border: rgba(115, 194, 140, 0.2);
+        --blog-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        --blog-shadow-hover: 0 26px 60px rgba(0, 0, 0, 0.6);
       }
 
       body.blog-page {
         background: linear-gradient(180deg, #f3efe9 0%, #ffffff 45%);
+      }
+      html[data-theme="dark"] body.blog-page {
+        background: linear-gradient(180deg, #15181b 0%, #1c1c1d 45%);
       }
 
       .blog-hero {
@@ -101,8 +119,8 @@
         background: var(--blog-card);
         border-radius: 24px;
         padding: 1.75rem 2.25rem;
-        box-shadow: 0 20px 60px rgba(28, 29, 32, 0.12);
-        border: 1px solid rgba(31, 77, 46, 0.08);
+        box-shadow: var(--blog-shadow);
+        border: 1px solid var(--blog-border);
       }
 
       .blog-hero .hero-kicker {
@@ -171,14 +189,14 @@
         border: none;
         background: var(--blog-card);
         border-radius: 18px;
-        box-shadow: 0 18px 40px rgba(28, 29, 32, 0.08);
+        box-shadow: var(--blog-shadow);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         height: 100%;
       }
 
       #medium-posts .card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 26px 60px rgba(28, 29, 32, 0.16);
+        box-shadow: var(--blog-shadow-hover);
       }
 
       #medium-posts .card-body {

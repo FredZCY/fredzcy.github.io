@@ -73,10 +73,28 @@
         --repo-accent-soft: #e3edf7;
         --repo-card: #ffffff;
         --repo-surface: #f4f6f9;
+        --repo-border: rgba(13, 59, 102, 0.08);
+        --repo-shadow: 0 20px 60px rgba(18, 22, 34, 0.12);
+        --repo-shadow-hover: 0 26px 60px rgba(18, 22, 34, 0.16);
+      }
+
+      html[data-theme="dark"] {
+        --repo-ink: #e8e8e8;
+        --repo-muted: #b4bcc4;
+        --repo-accent: #7bb6ff;
+        --repo-accent-soft: #16283c;
+        --repo-card: #22262b;
+        --repo-surface: #1c1c1d;
+        --repo-border: rgba(123, 182, 255, 0.2);
+        --repo-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        --repo-shadow-hover: 0 26px 60px rgba(0, 0, 0, 0.6);
       }
 
       body.repo-page {
         background: linear-gradient(180deg, #eef2f7 0%, #ffffff 45%);
+      }
+      html[data-theme="dark"] body.repo-page {
+        background: linear-gradient(180deg, #15181b 0%, #1c1c1d 45%);
       }
 
       .repo-hero {
@@ -98,8 +116,8 @@
         background: var(--repo-card);
         border-radius: 24px;
         padding: 1.75rem 2.25rem;
-        box-shadow: 0 20px 60px rgba(18, 22, 34, 0.12);
-        border: 1px solid rgba(13, 59, 102, 0.08);
+        box-shadow: var(--repo-shadow);
+        border: 1px solid var(--repo-border);
       }
 
       .repo-hero .hero-kicker {
@@ -170,14 +188,14 @@
         border: none;
         background: var(--repo-card);
         border-radius: 18px;
-        box-shadow: 0 18px 40px rgba(18, 22, 34, 0.08);
+        box-shadow: var(--repo-shadow);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         height: 100%;
       }
 
       .repo-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 26px 60px rgba(18, 22, 34, 0.16);
+        box-shadow: var(--repo-shadow-hover);
       }
 
       .repo-card .card-body {
@@ -282,7 +300,7 @@
           <div class="hero-kicker">GitHub</div>
           <h1>Selected repositories and ongoing experiments.</h1>
           <p>
-            A curated snapshot of projects I want to highlight. For the full
+            A curated snapshot of projects I did at school. For the full
             list, visit my GitHub profile.
           </p>
           <div class="hero-actions">
@@ -293,7 +311,7 @@
               rel="noopener"
               >View All Repositories</a
             >
-            <span class="hero-note">Hand-picked favorites below.</span>
+            <span class="hero-note">Hand-picked school projects below.</span>
           </div>
         </div>
       </div>
@@ -302,16 +320,14 @@
     <div class="container repo-content">
       <div class="post">
         <h2 class="repo-section-title">Selected repositories</h2>
-        <p class="repo-section-subtitle">
-          These are the projects I have chosen to feature here.
-        </p>
+
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           <div class="col mb-4">
             <div class="card repo-card">
               <div class="card-body">
                 <div class="repo-name">Pokemon-Fight-Prediction</div>
-                <div class="repo-meta">Prediction models and battle stats.</div>
+                
                 <a
                   class="repo-link"
                   href="https://github.com/FredZCY/Pokemon-Fight-Prediction"
@@ -328,7 +344,7 @@
             <div class="card repo-card">
               <div class="card-body">
                 <div class="repo-name">Ham-Volume-Prediction</div>
-                <div class="repo-meta">Regression and forecasting exercise.</div>
+                
                 <a
                   class="repo-link"
                   href="https://github.com/FredZCY/Ham-Volume-Prediction"
@@ -347,7 +363,7 @@
                 <div class="repo-name">
                   Skeleton-Based-Classroom-Human-Action-Recognition
                 </div>
-                <div class="repo-meta">Human action recognition research.</div>
+                
                 <a
                   class="repo-link"
                   href="https://github.com/FredZCY/Skeleton-Based-Classroom-Human-Action-Recognition"
@@ -364,7 +380,7 @@
             <div class="card repo-card">
               <div class="card-body">
                 <div class="repo-name">325-Bird-Species-Classification</div>
-                <div class="repo-meta">Fine-grained image classification.</div>
+                
                 <a
                   class="repo-link"
                   href="https://github.com/FredZCY/325-Bird-Species-Classification"
@@ -381,7 +397,7 @@
             <div class="card repo-card">
               <div class="card-body">
                 <div class="repo-name">Action-Recognition-HMDB51</div>
-                <div class="repo-meta">Video action recognition pipeline.</div>
+                
                 <a
                   class="repo-link"
                   href="https://github.com/FredZCY/Action-Recognition-HMDB51"
@@ -400,7 +416,7 @@
                 <div class="repo-name">
                   Cloud-DDoS-Attack-Detection-with-ML-Methods
                 </div>
-                <div class="repo-meta">ML methods for DDoS detection.</div>
+                
                 <a
                   class="repo-link"
                   href="https://github.com/FredZCY/Cloud-DDoS-Attack-Detection-with-ML-Methods"
