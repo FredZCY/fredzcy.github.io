@@ -144,32 +144,27 @@
         <br />
 
         <div class="container featured-posts">
-          <div class="row row-cols-2">
-            <div class="card-item col">
-              <a href="/blog/2020/7_3/">
-                <div class="card hoverable">
-                  <div class="row g-0">
-                    <div class="col-md-12">
-                      <div class="card-body">
-                        <div class="float-right">
-                          <i class="fa-solid fa-thumbtack fa-xs"></i>
-                        </div>
-                        <h3 class="card-title text-lowercase"> 未完待续 - 她</h3>
-                        <p class="card-text">
-                          和自己说再见。然后积极入冬，明亮相逢。
-                        </p>
-                        <p class="post-meta">
-                          55555 min read ·
-                          <a href="/blog/2020">
-                            <i class="fas fa-calendar fa-sm"></i> 2026
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
+          <div class="row">
+            <div class="col-12">
+              <p class="mb-2">
+                My writing now lives on Medium. You can follow along here:
+                <a
+                  href="https://medium.com/@zhangchenyu555"
+                  target="_blank"
+                  rel="noopener"
+                  >@zhangchenyu555</a
+                >.
+              </p>
+              <p class="text-muted mb-4">
+                Latest posts load automatically from Medium.
+              </p>
             </div>
+          </div>
+
+          <div id="medium-posts" class="row row-cols-1 row-cols-md-2"></div>
+          <div id="medium-error" class="text-muted" style="display: none;">
+            Could not load Medium posts right now. Please visit the profile
+            above.
           </div>
         </div>
       </div>
@@ -194,6 +189,102 @@
     <script src="/assets/js/no_defer.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/copy_code.js"></script>
+
+    <script>
+      (function () {
+        var username = "zhangchenyu555";
+        var feedUrl = "https://medium.com/feed/@" + username;
+        var apiUrl =
+          "https://api.rss2json.com/v1/api.json?rss_url=" +
+          encodeURIComponent(feedUrl);
+
+        var container = document.getElementById("medium-posts");
+        var errorMessage = document.getElementById("medium-error");
+        if (!container) {
+          return;
+        }
+
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        function stripHtml(value) {
+          var temp = document.createElement("div");
+          temp.innerHTML = value || "";
+          return (temp.textContent || temp.innerText || "").trim();
+        }
+
+        function formatDate(value) {
+          var date = new Date(value);
+          if (Number.isNaN(date.getTime())) {
+            return "";
+          }
+          return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+        }
+
+        fetch(apiUrl)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (!data || data.status !== "ok" || !Array.isArray(data.items)) {
+              throw new Error("Invalid feed response");
+            }
+
+            var items = data.items.slice(0, 6);
+            if (!items.length) {
+              throw new Error("No Medium items");
+            }
+
+            container.innerHTML = items
+              .map(function (item) {
+                var title = escapeHtml(item.title || "Untitled");
+                var link = escapeHtml(item.link || "https://medium.com/@" + username);
+                var excerpt = stripHtml(item.description || item.content || "");
+                excerpt = escapeHtml(excerpt.replace(/\s+/g, " ").slice(0, 140));
+                var dateLabel = formatDate(item.pubDate);
+
+                return (
+                  '<div class="card-item col mb-4">' +
+                  '<a href="' +
+                  link +
+                  '" target="_blank" rel="noopener">' +
+                  '<div class="card hoverable">' +
+                  '<div class="row g-0">' +
+                  '<div class="col-md-12">' +
+                  '<div class="card-body">' +
+                  '<h3 class="card-title">' +
+                  title +
+                  "</h3>" +
+                  (excerpt
+                    ? '<p class="card-text">' + excerpt + "...</p>"
+                    : "") +
+                  (dateLabel
+                    ? '<p class="post-meta"><i class="fas fa-calendar fa-sm"></i> ' +
+                      dateLabel +
+                      "</p>"
+                    : "") +
+                  "</div></div></div></div></a></div>"
+                );
+              })
+              .join("");
+          })
+          .catch(function () {
+            if (errorMessage) {
+              errorMessage.style.display = "block";
+            }
+          });
+      })();
+    </script>
 
     <script>
       window.MathJax = { tex: { tags: "ams" } };
