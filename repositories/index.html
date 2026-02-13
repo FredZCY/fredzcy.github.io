@@ -69,11 +69,11 @@
       :root {
         --repo-ink: #121622;
         --repo-muted: #5e6472;
-        --repo-accent: #0d3b66;
-        --repo-accent-soft: #e3edf7;
+        --repo-accent: var(--global-theme-color);
+        --repo-accent-soft: rgba(0, 118, 223, 0.12);
         --repo-card: #ffffff;
         --repo-surface: #f4f6f9;
-        --repo-border: rgba(13, 59, 102, 0.08);
+        --repo-border: rgba(0, 118, 223, 0.16);
         --repo-shadow: 0 20px 60px rgba(18, 22, 34, 0.12);
         --repo-shadow-hover: 0 26px 60px rgba(18, 22, 34, 0.16);
       }
@@ -81,11 +81,11 @@
       html[data-theme="dark"] {
         --repo-ink: #e8e8e8;
         --repo-muted: #b4bcc4;
-        --repo-accent: #7bb6ff;
-        --repo-accent-soft: #16283c;
+        --repo-accent: var(--global-theme-color);
+        --repo-accent-soft: rgba(38, 152, 186, 0.2);
         --repo-card: #22262b;
         --repo-surface: #1c1c1d;
-        --repo-border: rgba(123, 182, 255, 0.2);
+        --repo-border: rgba(38, 152, 186, 0.25);
         --repo-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
         --repo-shadow-hover: 0 26px 60px rgba(0, 0, 0, 0.6);
       }
@@ -102,12 +102,24 @@
         padding: 2.25rem 0 1.75rem;
         background: radial-gradient(
             circle at 15% 20%,
-            rgba(13, 59, 102, 0.08),
+            rgba(0, 118, 223, 0.12),
             transparent 50%
           ),
           radial-gradient(
             circle at 85% 10%,
-            rgba(13, 59, 102, 0.12),
+            rgba(0, 118, 223, 0.16),
+            transparent 45%
+          );
+      }
+      html[data-theme="dark"] .repo-hero {
+        background: radial-gradient(
+            circle at 15% 20%,
+            rgba(38, 152, 186, 0.18),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 85% 10%,
+            rgba(38, 152, 186, 0.22),
             transparent 45%
           );
       }

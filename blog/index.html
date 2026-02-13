@@ -72,11 +72,11 @@
       :root {
         --blog-ink: #1c1d20;
         --blog-muted: #6b6f76;
-        --blog-accent: #1f4d7a;
-        --blog-accent-soft: #dbe7f2;
+        --blog-accent: var(--global-theme-color);
+        --blog-accent-soft: rgba(0, 118, 223, 0.12);
         --blog-card: #ffffff;
         --blog-surface: #f7f3ee;
-        --blog-border: rgba(31, 77, 122, 0.12);
+        --blog-border: rgba(0, 118, 223, 0.16);
         --blog-shadow: 0 20px 60px rgba(28, 29, 32, 0.12);
         --blog-shadow-hover: 0 26px 60px rgba(28, 29, 32, 0.16);
       }
@@ -84,11 +84,11 @@
       html[data-theme="dark"] {
         --blog-ink: #e8e8e8;
         --blog-muted: #b6bcc2;
-        --blog-accent: #7bb6ff;
-        --blog-accent-soft: #16283c;
+        --blog-accent: var(--global-theme-color);
+        --blog-accent-soft: rgba(38, 152, 186, 0.2);
         --blog-card: #22262b;
         --blog-surface: #1c1c1d;
-        --blog-border: rgba(123, 182, 255, 0.2);
+        --blog-border: rgba(38, 152, 186, 0.25);
         --blog-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
         --blog-shadow-hover: 0 26px 60px rgba(0, 0, 0, 0.6);
       }
@@ -105,12 +105,24 @@
         padding: 2.25rem 0 1.75rem;
         background: radial-gradient(
             circle at 20% 20%,
-            rgba(31, 77, 122, 0.1),
+            rgba(0, 118, 223, 0.12),
             transparent 50%
           ),
           radial-gradient(
             circle at 80% 10%,
-            rgba(31, 77, 122, 0.12),
+            rgba(0, 118, 223, 0.16),
+            transparent 45%
+          );
+      }
+      html[data-theme="dark"] .blog-hero {
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(38, 152, 186, 0.18),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 10%,
+            rgba(38, 152, 186, 0.22),
             transparent 45%
           );
       }
