@@ -337,11 +337,11 @@
     <script>
       (function () {
         var profileUrl = "https://fred-zhang.medium.com";
-        var feedUrl = "https://fred-zhang.medium.com/feed";
-        var apiUrl =
-          "https://api.rss2json.com/v1/api.json?rss_url=" +
-          encodeURIComponent(feedUrl) +
-          "&count=6";
+        var feedUrls = [
+          "https://fred-zhang.medium.com/feed",
+          "https://medium.com/feed/@zhangchenyu555",
+        ];
+        var itemsLimit = 6;
 
         var container = document.getElementById("medium-posts");
         var errorMessage = document.getElementById("medium-error");
@@ -377,58 +377,132 @@
           });
         }
 
-        fetch(apiUrl)
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (data) {
-            if (!data || data.status !== "ok" || !Array.isArray(data.items)) {
-              throw new Error("Invalid feed response");
-            }
+        function renderItems(items) {
+          if (!items.length) {
+            throw new Error("No Medium items");
+          }
 
-            var items = data.items.slice(0, 6);
-            if (!items.length) {
-              throw new Error("No Medium items");
-            }
+          if (statusMessage) {
+            statusMessage.textContent =
+              "Showing " + items.length + " latest posts from Medium.";
+          }
 
-            if (statusMessage) {
-              statusMessage.textContent =
-                "Showing " + items.length + " latest posts from Medium.";
-            }
+          container.innerHTML = items
+            .map(function (item) {
+              var title = escapeHtml(item.title || "Untitled");
+              var link = escapeHtml(item.link || profileUrl);
+              var excerpt = stripHtml(item.description || item.content || "");
+              excerpt = escapeHtml(excerpt.replace(/\s+/g, " ").slice(0, 140));
+              var dateLabel = formatDate(item.pubDate);
 
-            container.innerHTML = items
-              .map(function (item) {
-                var title = escapeHtml(item.title || "Untitled");
-                var link = escapeHtml(item.link || profileUrl);
-                var excerpt = stripHtml(item.description || item.content || "");
-                excerpt = escapeHtml(excerpt.replace(/\s+/g, " ").slice(0, 140));
-                var dateLabel = formatDate(item.pubDate);
+              return (
+                '<div class="card-item col mb-4">' +
+                '<a href="' +
+                link +
+                '" target="_blank" rel="noopener">' +
+                '<div class="card hoverable">' +
+                '<div class="row g-0">' +
+                '<div class="col-md-12">' +
+                '<div class="card-body">' +
+                '<h3 class="card-title">' +
+                title +
+                "</h3>" +
+                (excerpt
+                  ? '<p class="card-text">' + excerpt + "...</p>"
+                  : "") +
+                (dateLabel
+                  ? '<p class="post-meta"><i class="fas fa-calendar fa-sm"></i> ' +
+                    dateLabel +
+                    "</p>"
+                  : "") +
+                "</div></div></div></div></a></div>"
+              );
+            })
+            .join("");
+        }
 
-                return (
-                  '<div class="card-item col mb-4">' +
-                  '<a href="' +
-                  link +
-                  '" target="_blank" rel="noopener">' +
-                  '<div class="card hoverable">' +
-                  '<div class="row g-0">' +
-                  '<div class="col-md-12">' +
-                  '<div class="card-body">' +
-                  '<h3 class="card-title">' +
-                  title +
-                  "</h3>" +
-                  (excerpt
-                    ? '<p class="card-text">' + excerpt + "...</p>"
-                    : "") +
-                  (dateLabel
-                    ? '<p class="post-meta"><i class="fas fa-calendar fa-sm"></i> ' +
-                      dateLabel +
-                      "</p>"
-                    : "") +
-                  "</div></div></div></div></a></div>"
-                );
-              })
-              .join("");
-          })
+        function fetchViaRss2Json(feedUrl) {
+          var apiUrl =
+            "https://api.rss2json.com/v1/api.json?rss_url=" +
+            encodeURIComponent(feedUrl) +
+            "&count=" +
+            itemsLimit;
+
+          return fetch(apiUrl)
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (data) {
+              if (
+                !data ||
+                data.status !== "ok" ||
+                !Array.isArray(data.items)
+              ) {
+                throw new Error("Invalid rss2json response");
+              }
+              return data.items.slice(0, itemsLimit);
+            });
+        }
+
+        function parseRss(xmlText) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(xmlText, "text/xml");
+          if (doc.querySelector("parsererror")) {
+            throw new Error("Invalid RSS XML");
+          }
+
+          var nodes = Array.prototype.slice.call(
+            doc.querySelectorAll("item")
+          );
+
+          return nodes.slice(0, itemsLimit).map(function (node) {
+            var titleNode = node.querySelector("title");
+            var linkNode = node.querySelector("link");
+            var dateNode = node.querySelector("pubDate");
+            var descriptionNode = node.querySelector("description");
+            var encodedNode = node.querySelector("content\\:encoded");
+
+            return {
+              title: titleNode ? titleNode.textContent : "",
+              link: linkNode ? linkNode.textContent : "",
+              pubDate: dateNode ? dateNode.textContent : "",
+              description: encodedNode
+                ? encodedNode.textContent
+                : descriptionNode
+                ? descriptionNode.textContent
+                : "",
+            };
+          });
+        }
+
+        function fetchViaAllOrigins(feedUrl) {
+          var proxyUrl =
+            "https://api.allorigins.win/raw?url=" +
+            encodeURIComponent(feedUrl);
+          return fetch(proxyUrl)
+            .then(function (response) {
+              return response.text();
+            })
+            .then(parseRss);
+        }
+
+        function tryFeeds(index) {
+          if (index >= feedUrls.length) {
+            return Promise.reject(new Error("All feeds failed"));
+          }
+
+          var feedUrl = feedUrls[index];
+          return fetchViaRss2Json(feedUrl)
+            .catch(function () {
+              return fetchViaAllOrigins(feedUrl);
+            })
+            .catch(function () {
+              return tryFeeds(index + 1);
+            });
+        }
+
+        tryFeeds(0)
+          .then(renderItems)
           .catch(function () {
             if (errorMessage) {
               errorMessage.style.display = "block";
